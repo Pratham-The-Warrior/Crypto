@@ -1,0 +1,48 @@
+# ------------------------------
+# Node.js - backend
+# ------------------------------
+backend/node_modules/
+backend/.env
+backend/.env.local
+backend/.env.*.local
+backend/logs/
+backend/npm-debug.log*
+backend/yarn-debug.log*
+backend/yarn-error.log*
+
+# Backend build/output folders (if any)
+backend/dist/
+
+# ------------------------------
+# Vite frontend
+# ------------------------------
+frontend/node_modules/
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+
+# Vite cache
+frontend/.vite/
+frontend/dist/
+frontend/build/
+
+# Logs
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# ------------------------------
+# OS & editor files
+# ------------------------------
+.DS_Store
+Thumbs.db
+
+# VSCode/IDE
+.vscode/
+.idea/
+
+# Optional caches
+.cache/
+.parcel-cache/
+.npm/
+.eslintcache/

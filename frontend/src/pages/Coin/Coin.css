@@ -1,0 +1,331 @@
+/* === Futuristic Spinner === */
+.spinner {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  background: radial-gradient(circle at center, #0d0d1a 0%, #050510 100%);
+  overflow: hidden;
+}
+
+.spin {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Outer rotating ring */
+.spin::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 4px solid transparent;
+  border-top-color: #00ffff;
+  border-right-color: #00ffff;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 15px #00ffff);
+  animation: rotate 1.2s linear infinite;
+}
+
+/* Inner counter-rotating ring */
+.spin::after {
+  content: "";
+  position: absolute;
+  width: 55%;
+  height: 55%;
+  border: 3px solid transparent;
+  border-bottom-color: #ff00ff;
+  border-left-color: #ff00ff;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 12px #ff00ff);
+  animation: rotateReverse 1.2s linear infinite;
+}
+
+/* Keyframes */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotateReverse {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* === Coin Dashboard === */
+.coin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  color: #f1f1f1;
+  font-family: "Times New Roman", Times, serif;
+  transition: transform 0.4s ease;
+}
+
+.coin-name {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 2.5rem;
+  font-weight: 500;
+  padding: 1rem 2rem;
+  border-radius: 16px;
+  margin-left: -30px;
+  transition: all 0.3s ease;
+}
+
+.coin-name:hover {
+  background: rgba(30, 30, 60, 0.95);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.coin-name img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0, 255, 200, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.coin-name img:hover {
+  transform: scale(1.1);
+}
+
+/* Chart Container */
+.coin-chart {
+  width: 100%;
+  background: rgba(20, 20, 40, 0.85);
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  padding: 25px;
+  box-shadow: 0 0 20px rgba(0, 255, 200, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.coin-chart:hover {
+  transform: translateY(-3px) scale(1.01);
+}
+
+/* Coin Info Section */
+.coin-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.coin-info ul {
+  list-style: none;
+  background: rgba(20, 20, 40, 0.85);
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.coin-info ul:hover {
+  background: rgba(30, 30, 60, 0.95);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.coin-info ul li:first-child {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.coin-info ul li:last-child {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #a5bab6;
+  /* text-shadow: 0 0 8px #00ffc8; */
+}
+
+/* Spinner Styles for fallback/loading */
+.spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  background: rgba(10, 10, 30, 0.95);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .coin {
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .coin-name img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .coin-info ul li:last-child {
+    font-size: 1rem;
+  }
+
+  .coin-chart {
+    padding: 15px;
+  }
+}
+
+/* === Trade Section === */
+.trade-section {
+  display: flex;
+  justify-content: flex-end; /* aligns button/form to the right */
+  align-items: center;
+  margin-top: 1.5rem;
+  gap: 1rem; /* space between button and form */
+  flex-wrap: wrap; /* makes it responsive on smaller screens */
+}
+
+/* Trade Button */
+.trade-btn {
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #00ffff, #ff00ff);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 255, 200, 0.3);
+  transition: all 0.3s ease;
+}
+
+.trade-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 25px rgba(0, 255, 200, 0.5);
+}
+
+/* Trade Form Container */
+.trade-form-container {
+  flex: 1 1 300px; /* allow form to grow and be responsive */
+  max-width: 400px;
+  background: rgba(20, 20, 40, 0.9);
+  padding: 1.5rem;
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.trade-form-container:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 0 25px rgba(255, 0, 255, 0.4);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .trade-section {
+    justify-content: center; /* stack center on mobile */
+  }
+
+  .trade-form-container {
+    max-width: 100%;
+  }
+}
+
+/*
+balance section
+*/
+.balance-btn {
+  padding: 0.7rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #2196f3, #00b0ff);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(33, 150, 243, 0.3);
+  transition: all 0.3s ease;
+}
+
+.balance-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 25px rgba(33, 150, 243, 0.5);
+}
+
+.balance-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background: rgba(20, 20, 40, 0.85);
+  border-radius: 16px;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 15px rgba(0, 255, 200, 0.2);
+  font-family: "Times New Roman", Times, serif;
+}
+
+.balance-table th,
+.balance-table td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.balance-table th {
+  background: rgba(30, 30, 60, 0.95);
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.balance-table tbody tr {
+  transition: background 0.3s ease;
+}
+
+.balance-table tbody tr:nth-child(even) {
+  background: rgba(20, 20, 40, 0.75);
+}
+
+.balance-table tbody tr:hover {
+  background: rgba(30, 30, 60, 0.9);
+}
+
+.balance-table td {
+  font-size: 1rem;
+  color: #a5bab6;
+}
+
+.zero-balance {
+  color: #e6e1e1;
+  /* font-style: italic; */
+}

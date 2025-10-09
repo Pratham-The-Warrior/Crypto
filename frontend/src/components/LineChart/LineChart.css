@@ -1,0 +1,47 @@
+.linechart-container {
+  background: rgba(20, 20, 40, 0.85);
+  padding: 20px;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.chart-controls {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.chart-controls label {
+  font-size: 0.95rem;
+  color: #ccc;
+  font-weight: 500;
+}
+
+.chart-controls select {
+  padding: 5px 10px;
+  margin-left: 5px;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: rgba(10, 10, 30, 0.9);
+  color: #fff;
+  cursor: pointer;
+}
+
+.chart-controls select:hover {
+  border-color: #888;
+  background: rgba(20, 20, 50, 0.9);
+}
+
+@media (max-width: 768px) {
+  .chart-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .chart-controls select {
+    margin-left: 0;
+  }
+}
