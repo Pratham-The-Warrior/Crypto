@@ -1,4 +1,4 @@
-# CryptoSquare
+# CryptoPlace
 
 A cool cryptocurrency marketplace built with **React**.
 
@@ -14,3 +14,32 @@ A cool cryptocurrency marketplace built with **React**.
 
 - React
 - Vite (or Create React App)
+
+## 🛠️ Folder Sturture
+
+C:.
+├── backend
+│ ├── node_modules/ # Backend dependencies
+│ ├── package.json
+│ ├── .env
+│ └── server.js # Example main server file (Express, etc.)
+│
+└── frontend
+├── node_modules/ # Frontend dependencies
+├── public/ # Static assets (favicon, index.html, etc.)
+├── src/
+│ ├── assets/ # Images, icons, etc.
+│ ├── components/
+│ │ ├── Footer/
+│ │ ├── LineChart/
+│ │ ├── Navbar/
+│ │ └── TradeForm/
+│ ├── context/ # React context providers
+│ └── pages/
+│ ├── Coin/
+│ ├── Features/
+│ └── Home/
+├── package.json
+└── vite.config.js # Or your chosen bundler config
+
+---
