@@ -6,14 +6,12 @@ import { Link } from "react-router-dom";
 const Home = () => {
   const { allCoin, currency } = useContext(CoinContext);
   const [displayCoin, setDisplayCoin] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(10); // Initially show 10 coins
+  const [visibleCount, setVisibleCount] = useState(10);
   const [input, setInput] = useState("");
+  const [predictions, setPredictions] = useState({});
 
-  const inputHandler = (event) => {
-    setInput(event.target.value);
-  };
+  const inputHandler = (event) => setInput(event.target.value);
 
-  // search bar functionality added
   const searchHandler = (event) => {
     event.preventDefault();
     const coins = allCoin.filter((item) =>
@@ -23,14 +21,65 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // Only slice if not searching
     if (input.trim() === "") {
       setDisplayCoin(allCoin.slice(0, visibleCount));
     }
   }, [allCoin, visibleCount, input]);
 
-  const loadMore = () => {
-    setVisibleCount((prev) => prev + 10); // Show 10 more coins
+  const loadMore = () => setVisibleCount((prev) => prev + 10);
+
+  // 🔮 OPENAI PREDICTION FUNCTION (calls backend)
+  const getPrediction = async (coin) => {
+    try {
+      const response = await fetch("http://localhost:5000/api/openai/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: coin.name,
+          current_price: coin.current_price,
+          price_change_percentage_24h: coin.price_change_percentage_24h,
+        }),
+      });
+
+      const data = await response.json();
+      const result = data.prediction?.trim() || "Neutral";
+
+      setPredictions((prev) => ({
+        ...prev,
+        [coin.id]: result,
+      }));
+    } catch (error) {
+      console.error("Prediction failed:", error);
+      setPredictions((prev) => ({
+        ...prev,
+        [coin.id]: "Neutral",
+      }));
+    }
+  };
+
+  // ⚙️ Fetch predictions ONLY for the top 10 visible coins
+  useEffect(() => {
+    const topTenCoins = displayCoin.slice(0, 10);
+    topTenCoins.forEach((coin) => {
+      if (!predictions[coin.id]) {
+        getPrediction(coin);
+      }
+    });
+  }, [displayCoin]);
+
+  // 🎨 Helper function to show colored symbols
+  const renderPrediction = (prediction) => {
+    switch (prediction?.toLowerCase()) {
+      case "up":
+        return <span className="prediction up">🔼 Up</span>;
+      case "down":
+        return <span className="prediction down">🔽 Down</span>;
+      case "neutral":
+      default:
+        return <span className="prediction neutral">⚪ Flat</span>;
+    }
   };
 
   return (
@@ -91,7 +140,16 @@ const Home = () => {
                 : "0.00"}
               %
             </p>
-            <p>Positive</p> {/* Added column cell */}
+
+            {/* 🟢 Show prediction only for top 10 coins */}
+            <p>
+              {index < 10
+                ? predictions[item.id]
+                  ? renderPrediction(predictions[item.id])
+                  : "⏳ Loading..."
+                : "—"}
+            </p>
+
             <p className="market-cap">
               {currency.symbol}
               {item.market_cap?.toLocaleString() ?? "N/A"}
@@ -99,7 +157,6 @@ const Home = () => {
           </Link>
         ))}
 
-        {/* Load More Button */}
         {input.trim() === "" && visibleCount < allCoin.length && (
           <div style={{ textAlign: "center", margin: "20px 0" }}>
             <button className="load-more-btn" onClick={loadMore}>

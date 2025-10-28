@@ -214,3 +214,18 @@
     display: none;
   }
 }
+
+.prediction.up {
+  color: #00c853; /* Green */
+  font-weight: 600;
+}
+
+.prediction.down {
+  color: #d32f2f; /* Red */
+  font-weight: 600;
+}
+
+.prediction.neutral {
+  color: #9e9e9e; /* Gray */
+  font-weight: 600;
+}

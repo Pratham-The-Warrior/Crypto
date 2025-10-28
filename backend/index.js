@@ -1,7 +1,9 @@
-const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const Binance = require("binance-api-node").default;
+// ✅ Use ESM syntax consistently (make sure package.json has "type": "module")
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import Binance from "binance-api-node";
+import openaiRoute from "./Routes/openaiRoute.js"; // OpenAI route
 
 dotenv.config();
 
@@ -9,8 +11,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Connect to Binance Spot API
-const client = Binance({
+// ====== OpenAI Route ======
+app.use("/api/openai", openaiRoute);
+
+// ====== Binance Client Setup ======
+const client = Binance.default({
   apiKey: process.env.BINANCE_API_KEY,
   apiSecret: process.env.BINANCE_API_SECRET,
 });
@@ -31,12 +36,14 @@ const coinBinanceMap = {
   stellar: "XLMUSDT",
 };
 
-// Endpoint to get the manual mapping
+// ===== API Endpoints =====
+
+// ✅ Get the manual mapping
 app.get("/api/coin-binance-map", (req, res) => {
   res.json(coinBinanceMap);
 });
 
-// 🪙 Get account balances
+// ✅ Get account balances
 app.get("/api/balance", async (req, res) => {
   try {
     const account = await client.accountInfo();
@@ -47,7 +54,7 @@ app.get("/api/balance", async (req, res) => {
   }
 });
 
-// 💰 Place market order
+// ✅ Place market order
 app.post("/api/order", async (req, res) => {
   const { symbol, side, quantity } = req.body;
 
@@ -65,8 +72,8 @@ app.post("/api/order", async (req, res) => {
   }
 });
 
-// Start server
-const PORT = 5000;
+// ===== Start Server =====
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () =>
   console.log(`✅ Backend running on http://localhost:${PORT}`)
 );
