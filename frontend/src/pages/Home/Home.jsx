@@ -59,7 +59,7 @@ const Home = () => {
     }
   };
 
-  // ⚙️ Fetch predictions ONLY for the top 10 visible coins
+  //  Fetch predictions ONLY for the top 10 visible coins
   useEffect(() => {
     const topTenCoins = displayCoin.slice(0, 10);
     topTenCoins.forEach((coin) => {
@@ -69,7 +69,7 @@ const Home = () => {
     });
   }, [displayCoin]);
 
-  // 🎨 Helper function to show colored symbols
+  //  Helper function to show colored symbols
   const renderPrediction = (prediction) => {
     switch (prediction?.toLowerCase()) {
       case "up":
