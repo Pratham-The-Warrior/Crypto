@@ -1,0 +1,108 @@
+.signin-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0c012b, #1c0558);
+  font-family: "Poppins", sans-serif;
+  color: white;
+}
+
+.signin-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 40px 50px;
+  border-radius: 20px;
+  width: 400px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.signin-card h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.signin-card p {
+  font-size: 14px;
+  color: #cfcfcf;
+  margin-bottom: 25px;
+}
+
+.input-group {
+  text-align: left;
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.input-group input::placeholder {
+  color: #aaa;
+}
+
+/* Remember Me + Forgot Password */
+.signin-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.signin-options a {
+  color: #7a3cff;
+  text-decoration: none;
+}
+
+.signin-options a:hover {
+  text-decoration: underline;
+}
+
+/* Button */
+.signin-btn {
+  width: 100%;
+  background: #7a3cff;
+  border: none;
+  color: white;
+  font-size: 16px;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+.signin-btn:hover {
+  background: #9b5cff;
+}
+
+/* Link to Sign Up */
+.signup-link {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.signup-link a {
+  color: #7a3cff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.signup-link a:hover {
+  text-decoration: underline;
+}
