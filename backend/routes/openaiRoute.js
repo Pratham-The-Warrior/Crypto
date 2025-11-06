@@ -1,24 +1,25 @@
 import express from "express";
-import { getPrediction } from "../services/openaiService.js";
+import getPrediction from "../services/openaiService.js";
 
 const router = express.Router();
 
 router.post("/predict", async (req, res) => {
-  // Log everything you get from the frontend
-  console.log("📩 Received prediction request:", req.body);
-
   const { name, current_price, price_change_percentage_24h, change_24h } =
     req.body;
 
-  // Accept either "price_change_percentage_24h" or "change_24h"
+  console.log("📩 Incoming /predict request:", req.body);
+
+  // Support both "price_change_percentage_24h" and "change_24h"
   const change = price_change_percentage_24h ?? change_24h;
 
-  // ✅ Validate inputs
+  // Validate required fields
   if (!name || current_price === undefined || change === undefined) {
-    console.log("❌ Missing required fields:", { name, current_price, change });
+    const missingFields = { name, current_price, change };
+    console.warn("⚠️ Missing required fields:", missingFields);
+
     return res.status(400).json({
       error: "Missing required fields",
-      received: { name, current_price, change },
+      received: missingFields,
     });
   }
 
@@ -29,14 +30,14 @@ router.post("/predict", async (req, res) => {
       price_change_percentage_24h: change,
     });
 
-    console.log(`✅ Prediction for ${name}:`, prediction);
-
-    res.json({ prediction });
-  } catch (error) {
-    console.error("🔥 Prediction route error:", error.message);
-    res
-      .status(500)
-      .json({ error: "Prediction failed", details: error.message });
+    console.log(`✅ Prediction generated for ${name}:`, prediction);
+    return res.json({ prediction });
+  } catch (err) {
+    console.error("🔥 Error in /predict route:", err);
+    return res.status(500).json({
+      error: "Prediction failed",
+      details: err.message,
+    });
   }
 });
 

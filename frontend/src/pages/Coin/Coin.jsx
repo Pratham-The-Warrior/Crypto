@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "./Coin.css";
 import { useParams } from "react-router-dom";
 import { CoinContext } from "../../context/CoinContext";
-import Linechart from "../../components/LineChart/Linechart";
+import LineChart from "../../components/LineChart/LineChart";
 import TradeForm from "../../components/TradeForm/TradeForm";
 
 const COINGECKO_API_KEY = import.meta.env.VITE_COINGECKO_API_KEY;
@@ -22,7 +22,7 @@ const Coin = () => {
   const [loadingBalance, setLoadingBalance] = useState(false);
   const [balanceError, setBalanceError] = useState(null);
 
-  // Fetch coin details
+  // === Fetch coin details ===
   const fetchCoinData = async () => {
     try {
       const url = `https://api.coingecko.com/api/v3/coins/${coinId}`;
@@ -36,7 +36,7 @@ const Coin = () => {
     }
   };
 
-  // Fetch historical chart
+  // === Fetch historical chart ===
   const fetchHistoricalData = async () => {
     try {
       const url = `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart?vs_currency=${currency.name}&days=30`;
@@ -50,10 +50,12 @@ const Coin = () => {
     }
   };
 
-  // Fetch Binance mapping
+  // === Fetch Binance mapping ===
   const fetchMapping = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/coin-binance-map");
+      const res = await fetch(
+        "http://localhost:5000/api/binance/coin-binance-map"
+      );
       const data = await res.json();
       setCoinBinanceMap(data);
     } catch (err) {
@@ -61,13 +63,38 @@ const Coin = () => {
     }
   };
 
+  // === Fetch balances ===
+  const handleCheckBalance = async () => {
+    setLoadingBalance(true);
+    setBalanceError(null);
+    try {
+      const res = await fetch("http://localhost:5000/api/binance/balance");
+      if (!res.ok) throw new Error("Failed to fetch balances");
+      const data = await res.json();
+
+      const nonZero = data.filter(
+        (b) => parseFloat(b.free) > 0 || parseFloat(b.locked) > 0
+      );
+      setBalances(
+        nonZero.length > 0
+          ? nonZero
+          : [{ asset: "All", free: "0", locked: "0" }]
+      );
+    } catch (err) {
+      setBalanceError(err.message);
+    } finally {
+      setLoadingBalance(false);
+    }
+  };
+
+  // === Lifecycle ===
   useEffect(() => {
     fetchCoinData();
     fetchHistoricalData();
     fetchMapping();
   }, [coinId, currency]);
 
-  // Determine if tradable
+  // === Determine if tradable ===
   useEffect(() => {
     if (coinData && Object.keys(coinBinanceMap).length > 0) {
       setCanTrade(!!coinBinanceMap[coinData.id]);
@@ -75,31 +102,6 @@ const Coin = () => {
   }, [coinData, coinBinanceMap]);
 
   const handleTradeClick = () => setShowTradeForm(true);
-
-  // Fetch balances
-  const handleCheckBalance = async () => {
-    setLoadingBalance(true);
-    setBalanceError(null);
-    try {
-      const res = await fetch("http://localhost:5000/api/balance");
-      if (!res.ok) throw new Error("Failed to fetch balances");
-      const data = await res.json();
-
-      const nonZeroBalances = data.filter(
-        (b) => parseFloat(b.free) > 0 || parseFloat(b.locked) > 0
-      );
-
-      if (nonZeroBalances.length === 0) {
-        setBalances([{ asset: "All", free: "0", locked: "0" }]);
-      } else {
-        setBalances(nonZeroBalances);
-      }
-    } catch (err) {
-      setBalanceError(err.message);
-    } finally {
-      setLoadingBalance(false);
-    }
-  };
 
   if (!coinData || !historicalData)
     return (
@@ -120,7 +122,7 @@ const Coin = () => {
       </div>
 
       <div className="coin-chart">
-        <Linechart historicalData={historicalData} />
+        <LineChart historicalData={historicalData} />
       </div>
 
       <div className="coin-info">

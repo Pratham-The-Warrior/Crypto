@@ -28,60 +28,6 @@ const Home = () => {
 
   const loadMore = () => setVisibleCount((prev) => prev + 10);
 
-  // 🔮 OPENAI PREDICTION FUNCTION (calls backend)
-  const getPrediction = async (coin) => {
-    try {
-      const response = await fetch("http://localhost:5000/api/openai/predict", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: coin.name,
-          current_price: coin.current_price,
-          price_change_percentage_24h: coin.price_change_percentage_24h,
-        }),
-      });
-
-      const data = await response.json();
-      const result = data.prediction?.trim() || "Neutral";
-
-      setPredictions((prev) => ({
-        ...prev,
-        [coin.id]: result,
-      }));
-    } catch (error) {
-      console.error("Prediction failed:", error);
-      setPredictions((prev) => ({
-        ...prev,
-        [coin.id]: "Neutral",
-      }));
-    }
-  };
-
-  //  Fetch predictions ONLY for the top 10 visible coins
-  useEffect(() => {
-    const topTenCoins = displayCoin.slice(0, 10);
-    topTenCoins.forEach((coin) => {
-      if (!predictions[coin.id]) {
-        getPrediction(coin);
-      }
-    });
-  }, [displayCoin]);
-
-  //  Helper function to show colored symbols
-  const renderPrediction = (prediction) => {
-    switch (prediction?.toLowerCase()) {
-      case "up":
-        return <span className="prediction up">🔼 Up</span>;
-      case "down":
-        return <span className="prediction down">🔽 Down</span>;
-      case "neutral":
-      default:
-        return <span className="prediction neutral">⚪ Flat</span>;
-    }
-  };
-
   return (
     <div className="home">
       <div className="hero">
@@ -117,7 +63,6 @@ const Home = () => {
           <p>Crypto-Coins</p>
           <p>Price</p>
           <p style={{ textAlign: "center" }}>24hrs Change</p>
-          <p>Prediction</p>
           <p className="market-cap">Market Cap</p>
         </div>
 
@@ -133,21 +78,19 @@ const Home = () => {
               {item.current_price?.toLocaleString() ?? "N/A"}
             </p>
             <p
-              className={item.price_change_percentage_24h > 0 ? "green" : "red"}
+              className={
+                item.price_change_percentage_24h > 0
+                  ? "green"
+                  : item.price_change_percentage_24h < 0
+                  ? "red"
+                  : ""
+              }
             >
               {item.price_change_percentage_24h
-                ? item.price_change_percentage_24h.toFixed(2)
-                : "0.00"}
-              %
-            </p>
-
-            {/* 🟢 Show prediction only for top 10 coins */}
-            <p>
-              {index < 10
-                ? predictions[item.id]
-                  ? renderPrediction(predictions[item.id])
-                  : "⏳ Loading..."
-                : "—"}
+                ? `${item.price_change_percentage_24h.toFixed(2)}% ${
+                    item.price_change_percentage_24h > 0 ? "🔼" : "🔽"
+                  }`
+                : "0.00%"}
             </p>
 
             <p className="market-cap">

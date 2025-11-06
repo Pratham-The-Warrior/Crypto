@@ -8,6 +8,7 @@ import Feature from "./pages/Features/Feature";
 import SignUp from "./pages/signUp/signUp";
 import SignIn from "./pages/SignIn/SignIn";
 import Pricing from "./pages/Pricing/Pricing";
+import NewsPage from "./pages/News/NewsPage";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/news" element={<NewsPage />} />
       </Routes>
       <Footer />
     </div>

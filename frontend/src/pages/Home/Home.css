@@ -71,46 +71,62 @@
 .crypto-table {
   max-width: 1000px;
   margin: 60px auto;
-  background: rgba(30, 30, 30, 0.3);
-  border-radius: 15px;
+  background: rgba(25, 25, 25, 0.4);
+  border-radius: 16px;
   overflow: hidden;
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.crypto-table:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
 }
 
 /* ======= TABLE HEADER ======= */
 .table-header {
-  background: linear-gradient(90deg, #52ed57, #ff731c);
+  background: linear-gradient(90deg, #32cd32, #ff8c00);
   color: #ffffff;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   display: grid;
-  grid-template-columns: 0.6fr 2fr 1.2fr 1.2fr 1.2fr 1.5fr; /* fixed spacing */
-  padding: 16px 30px;
+  grid-template-columns: 0.6fr 2fr 1fr 1fr 1.3fr; /* fixed widths */
+  padding: 18px 32px;
   align-items: center;
   border-bottom: 2px solid rgba(255, 255, 255, 0.15);
   text-align: left;
+  font-size: 15px;
 }
 
 .table-header p {
   margin: 0;
   white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* ======= TABLE ROWS ======= */
 .table-layout {
   display: grid;
-  grid-template-columns: 0.6fr 2fr 1fr 1.2fr 1.2fr 1.5fr; /* matches header */
-  padding: 14px 25px;
+  grid-template-columns: 0.6fr 2fr 1fr 1fr 1.3fr; /* fixed spacing */
+  padding: 16px 30px;
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   transition: background 0.25s ease, transform 0.2s ease;
-  min-height: 64px;
+  min-height: 68px;
   text-align: left;
+}
+
+.table-layout:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.table-layout:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
 }
 
 .table-layout div {
@@ -123,45 +139,67 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.table-layout div img:hover {
+  transform: scale(1.1);
 }
 
 .table-layout p {
   margin: 0;
   font-size: 15px;
+  color: #e2e2e2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.table-layout .green {
-  color: #00d515;
-  text-align: center;
-  font-weight: 500;
-}
-
-.table-layout .red {
-  color: #ff4646;
-  text-align: center;
-  font-weight: 500;
-}
-
+/* Align numbers neatly */
+.table-layout p:nth-child(3),
+.table-layout p:nth-child(4),
 .market-cap {
   text-align: right;
 }
 
+.table-layout .green {
+  color: #00ff7f;
+  text-align: center;
+  font-weight: 600;
+}
+
+.table-layout .red {
+  color: #ff4b4b;
+  text-align: center;
+  font-weight: 600;
+}
+
+.market-cap {
+  font-weight: 500;
+  color: #cccccc;
+}
+
 /* ======= LOAD MORE BUTTON ======= */
 .load-more-btn {
-  background-color: #4caf50;
+  display: block;
+  margin: 30px auto 0;
+  background: linear-gradient(135deg, #4caf50, #43a047);
   color: white;
-  padding: 10px 24px;
+  padding: 12px 30px;
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 10px;
+  font-size: 17px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-top: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .load-more-btn:hover {
-  background-color: #45a049;
-  transform: scale(1.05);
+  background: linear-gradient(135deg, #43a047, #388e3c);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
 .load-more-btn:active {
@@ -176,7 +214,7 @@
 
   .table-header,
   .table-layout {
-    grid-template-columns: 0.5fr 2.2fr 1fr 1fr 1fr; /* Hide Market Cap */
+    grid-template-columns: 0.5fr 2fr 1fr 1fr; /* hide Market Cap */
   }
 
   .market-cap {
@@ -200,7 +238,7 @@
 
   .table-header,
   .table-layout {
-    grid-template-columns: 0.5fr 2fr 1fr 1fr; /* Hide Predictions & Market Cap */
+    grid-template-columns: 0.5fr 2fr 1fr;
     font-size: 12px;
   }
 
@@ -208,13 +246,13 @@
     width: 25px;
   }
 
-  /* Hide Prediction & Market Cap on small screens */
-  .table-layout p:nth-child(5),
+  .table-layout p:nth-child(4),
   .market-cap {
     display: none;
   }
 }
 
+/* ======= PREDICTION COLORS ======= */
 .prediction.up {
   color: #00c853; /* Green */
   font-weight: 600;
