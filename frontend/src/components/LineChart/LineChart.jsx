@@ -5,7 +5,7 @@ import "./LineChart.css";
 const Linechart = ({ historicalData }) => {
   const [data, setData] = useState([["Date", "Price"]]);
   const [chartType, setChartType] = useState("AreaChart"); // default chart type
-  const [range, setRange] = useState("30"); // default 30 days
+  const [range, setRange] = useState("30"); // default 30 days i have max 30days only
 
   const chartTypes = ["AreaChart", "LineChart", "ColumnChart"];
   const rangeOptions = [
@@ -44,12 +44,13 @@ const Linechart = ({ historicalData }) => {
 
     setData(dataCopy);
 
-    // Set Y-axis to start from first price with some padding
-    const firstPrice = filteredPrices[0][1];
-    const maxPrice = Math.max(...filteredPrices.map(([_, price]) => price));
+    // Set Y-axis to start from minimum price with some padding
+    const prices = filteredPrices.map(([_, price]) => price);
+    const minPrice = Math.min(...prices);
+    const maxPrice = Math.max(...prices);
     setVAxisRange({
-      min: firstPrice * 0.95, // 5% lower than first price
-      max: maxPrice * 1.05, // 5% higher than max price
+      min: Math.max(minPrice * 0.95, 0),
+      max: maxPrice * 1.05,
     });
   }, [historicalData, range]);
 

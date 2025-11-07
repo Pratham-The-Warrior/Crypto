@@ -16,9 +16,9 @@ export default function CryptoNews() {
       );
       const lastFetch = Number(localStorage.getItem("cryptoNewsTime")) || 0;
 
-      //  Only fetch if it’s been more than 1 hour
+      //  Only fetch if it’s been more than 20mins since last fetch
       if (
-        Date.now() - lastFetch < 60 * 60 * 1000 &&
+        Date.now() - lastFetch < 60 * 20 * 1000 &&
         storedArticles.length > 0
       ) {
         setArticles(storedArticles);
@@ -28,7 +28,7 @@ export default function CryptoNews() {
 
       try {
         const res = await fetch(
-          `https://api.thenewsapi.net/crypto?apikey=${API_KEY}&page=1&size=6`
+          `https://api.thenewsapi.net/crypto?apikey=${API_KEY}&page=1&size=3`
         );
         const data = await res.json();
 
@@ -77,7 +77,7 @@ export default function CryptoNews() {
 
   return (
     <div className="news-section">
-      <h2 className="news-heading">Latest Crypto News</h2>
+      {/* <h2 className="news-heading">Latest Crypto News</h2> */}
       <div className="news-grid">
         {articles.map((item) => (
           <div key={item.article_id} className="news-card">

@@ -62,7 +62,7 @@ const Home = () => {
           <p>#</p>
           <p>Crypto-Coins</p>
           <p>Price</p>
-          <p style={{ textAlign: "center" }}>24hrs Change</p>
+          <p>24hrs Change</p>
           <p className="market-cap">Market Cap</p>
         </div>
 
