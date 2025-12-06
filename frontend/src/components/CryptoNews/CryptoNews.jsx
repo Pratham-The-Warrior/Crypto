@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import "./CryptoNews.css";
+import { motion } from "framer-motion";
 
 export default function CryptoNews() {
   const [articles, setArticles] = useState([]);
@@ -79,8 +80,15 @@ export default function CryptoNews() {
     <div className="news-section">
       {/* <h2 className="news-heading">Latest Crypto News</h2> */}
       <div className="news-grid">
-        {articles.map((item) => (
-          <div key={item.article_id} className="news-card">
+        {articles.map((item, index) => (
+          <motion.div
+            key={item.article_id}
+            className="news-card"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
+            whileHover={{ scale: 1.02 }}
+          >
             {item.thumbnail && (
               <img
                 src={item.thumbnail}
@@ -104,7 +112,7 @@ export default function CryptoNews() {
                 Read More →
               </a>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

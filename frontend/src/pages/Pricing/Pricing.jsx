@@ -1,5 +1,6 @@
 import React from "react";
 import "./Pricing.css";
+import { motion } from "framer-motion";
 
 const plans = [
   {
@@ -45,17 +46,26 @@ const plans = [
 
 const Pricing = () => {
   return (
-    <section className="pricing-section">
-      <div className="pricing-header">
+    <div className="pricing-section">
+      <motion.div
+        className="pricing-header"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
         <h2>Pricing Plans</h2>
         <p>Choose the plan that fits your trading style.</p>
-      </div>
+      </motion.div>
 
       <div className="pricing-grid">
         {plans.map((plan, index) => (
-          <div
+          <motion.div
             key={index}
             className={`pricing-card ${plan.highlighted ? "highlighted" : ""}`}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.2 }}
+            whileHover={{ y: -10, boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }}
           >
             <h3 className="plan-name">{plan.name}</h3>
             <p className="plan-description">{plan.description}</p>
@@ -71,10 +81,10 @@ const Pricing = () => {
             <button className="plan-button">
               {plan.highlighted ? "Get Started" : "Choose Plan"}
             </button>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 

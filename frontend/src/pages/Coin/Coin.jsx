@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { CoinContext } from "../../context/CoinContext";
 import LineChart from "../../components/LineChart/LineChart";
 import TradeForm from "../../components/TradeForm/TradeForm";
+import { motion } from "framer-motion";
 
 const COINGECKO_API_KEY = import.meta.env.VITE_COINGECKO_API_KEY;
 
@@ -112,20 +113,35 @@ const Coin = () => {
 
   return (
     <div className="coin">
-      <div className="coin-name">
+      <motion.div
+        className="coin-name"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5 }}
+      >
         <img src={coinData.image.large} alt={coinData.name} />
         <p>
           <b>
             {coinData.name} ({coinData.symbol.toUpperCase()})
           </b>
         </p>
-      </div>
+      </motion.div>
 
-      <div className="coin-chart">
+      <motion.div
+        className="coin-chart"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
         <LineChart historicalData={historicalData} />
-      </div>
+      </motion.div>
 
-      <div className="coin-info">
+      <motion.div
+        className="coin-info"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+      >
         <ul>
           <li>Current Price</li>
           <li>
@@ -212,7 +228,7 @@ const Coin = () => {
             </table>
           )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

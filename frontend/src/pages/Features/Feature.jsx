@@ -1,5 +1,6 @@
 import React from "react";
 import "./feature.css";
+import { motion } from "framer-motion";
 
 const features = [
   {
@@ -41,25 +42,37 @@ const features = [
 
 const Features = () => {
   return (
-    <section className="features-section">
-      <div className="features-header">
+    <div className="features-section">
+      <motion.div
+        className="features-header"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
         <h2>Our Key Features</h2>
         <p>
           Experience the future of crypto trading with our secure and intuitive
           platform.
         </p>
-      </div>
+      </motion.div>
 
       <div className="features-grid">
         {features.map((feature, index) => (
-          <div className="feature-card" key={index}>
+          <motion.div
+            className="feature-card"
+            key={index}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, delay: index * 0.1 }}
+            whileHover={{ scale: 1.05 }}
+          >
             <div className="feature-icon">{feature.icon}</div>
             <h3>{feature.title}</h3>
             <p>{feature.description}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </section>
+    </div>
   );
 };
 

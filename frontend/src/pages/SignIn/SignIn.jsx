@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./SignIn.css";
+import { motion } from "framer-motion";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({
@@ -24,7 +25,12 @@ const SignIn = () => {
 
   return (
     <div className="signin-container">
-      <div className="signin-card">
+      <motion.div
+        className="signin-card"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
         <h2>Welcome Back</h2>
         <p>Sign in to continue trading on Cryptoplace</p>
 
@@ -76,7 +82,7 @@ const SignIn = () => {
         <p className="signup-link">
           Don’t have an account? <a href="/signup">Sign Up</a>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 };

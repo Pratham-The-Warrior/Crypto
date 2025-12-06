@@ -2,13 +2,15 @@ import React, { useEffect, useState, useContext } from "react";
 import "./Home.css";
 import { CoinContext } from "../../context/CoinContext";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+
+const MotionLink = motion(Link);
 
 const Home = () => {
   const { allCoin, currency } = useContext(CoinContext);
   const [displayCoin, setDisplayCoin] = useState([]);
   const [visibleCount, setVisibleCount] = useState(10);
   const [input, setInput] = useState("");
-  const [predictions, setPredictions] = useState({});
 
   const inputHandler = (event) => setInput(event.target.value);
 
@@ -30,7 +32,12 @@ const Home = () => {
 
   return (
     <div className="home">
-      <div className="hero">
+      <motion.div
+        className="hero"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
         <h1>
           Largest <br /> Crypto Exchange
         </h1>
@@ -55,7 +62,7 @@ const Home = () => {
           </datalist>
           <button type="submit">Search</button>
         </form>
-      </div>
+      </motion.div>
 
       <div className="crypto-table">
         <div className="table-layout table-header">
@@ -67,7 +74,14 @@ const Home = () => {
         </div>
 
         {displayCoin.map((item, index) => (
-          <Link to={`/coin/${item.id}`} className="table-layout" key={index}>
+          <MotionLink
+            to={`/coin/${item.id}`}
+            className="table-layout"
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.05, duration: 0.4 }}
+          >
             <p>{item.market_cap_rank}</p>
             <div>
               <img src={item.image} alt={item.name} />
@@ -82,14 +96,13 @@ const Home = () => {
                 item.price_change_percentage_24h > 0
                   ? "green"
                   : item.price_change_percentage_24h < 0
-                  ? "red"
-                  : ""
+                    ? "red"
+                    : ""
               }
             >
               {item.price_change_percentage_24h
-                ? `${item.price_change_percentage_24h.toFixed(2)}% ${
-                    item.price_change_percentage_24h > 0 ? "🔼" : "🔽"
-                  }`
+                ? `${item.price_change_percentage_24h.toFixed(2)}% ${item.price_change_percentage_24h > 0 ? "🔼" : "🔽"
+                }`
                 : "0.00%"}
             </p>
 
@@ -97,15 +110,20 @@ const Home = () => {
               {currency.symbol}
               {item.market_cap?.toLocaleString() ?? "N/A"}
             </p>
-          </Link>
+          </MotionLink>
         ))}
 
         {input.trim() === "" && visibleCount < allCoin.length && (
-          <div style={{ textAlign: "center", margin: "20px 0" }}>
+          <motion.div
+            style={{ textAlign: "center", margin: "20px 0" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 }}
+          >
             <button className="load-more-btn" onClick={loadMore}>
               Load More
             </button>
-          </div>
+          </motion.div>
         )}
       </div>
     </div>

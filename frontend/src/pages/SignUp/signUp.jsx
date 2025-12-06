@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./signUp.css";
+import { motion } from "framer-motion";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -25,9 +26,14 @@ export default function SignUp() {
 
   return (
     <div className="signup-container">
-      <div className="signup-card">
+      <motion.div
+        className="signup-card"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
+      >
         <h2>Create Your Account</h2>
-        <p>Join the world`s largest crypto exchange today.</p>
+        <p>Join the world's largest crypto exchange today.</p>
         <form onSubmit={handleSubmit}>
           <div className="input-group">
             <label htmlFor="name">Full Name</label>
@@ -89,7 +95,7 @@ export default function SignUp() {
         <p className="signin-link">
           Already have an account? <a href="/signin">Sign in</a>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 }
