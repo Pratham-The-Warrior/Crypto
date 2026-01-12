@@ -1,8 +1,5 @@
 .linechart-container {
-  background: rgba(20, 20, 40, 0.85);
-  padding: 20px;
-  border-radius: 12px;
-  backdrop-filter: blur(6px);
+  /* background & padding removed to avoid double-container issue with Coin page */
   display: flex;
   flex-direction: column;
   gap: 15px;

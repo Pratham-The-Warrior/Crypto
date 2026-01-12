@@ -1,65 +1,77 @@
+/* NewsPage.css */
+
 .news-page {
-  background: linear-gradient(to bottom, #09071d, #01222d);
+  /* Use global app gradient or a refined one */
+  background: radial-gradient(circle at 60% 20%, #1a1a40 0%, #0b004e 45%, #050511 100%);
   color: #ffffff;
   min-height: 100vh;
-  padding-top: 10px;
+  padding: 100px 5%;
+  position: relative;
 }
 
-/* Header Section (more compact) */
+/* Background effects */
+.news-page::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  right: -5%;
+  width: 40vw;
+  height: 40vw;
+  background: radial-gradient(circle, rgba(41, 98, 255, 0.1) 0%, transparent 60%);
+  border-radius: 50%;
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Header Section */
 .news-header {
   text-align: center;
-  margin: 0 auto 10px;
-  padding: 25px 20px;
-  background: rgba(8, 15, 35, 0.9);
-  border-radius: 12px;
-  width: 75%;
-  max-width: 700px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.35);
-  transition: all 0.3s ease;
+  margin: 0 auto 60px;
+  max-width: 800px;
+  position: relative;
+  z-index: 1;
 }
 
-.news-header:hover {
-  background: rgba(10, 25, 60, 0.95);
-}
-
-/* Main Title */
 .news-page-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 6px;
-  color: #ffffff;
-  letter-spacing: 0.3px;
-  line-height: 1.3;
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Subtitle */
 .news-page-subtitle {
-  color: #b0b0b0;
-  font-size: 0.95rem;
-  max-width: 520px;
+  color: #b0b0d0;
+  font-size: 1.2rem;
+  max-width: 600px;
   margin: 0 auto;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
-/* Divider below header */
 .news-divider {
-  width: 80px;
-  height: 3px;
-  background: linear-gradient(90deg, #007bff, #00ffe1);
-  border-radius: 3px;
-  margin: 25px auto 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #00c076, #2962ff);
+  border-radius: 4px;
+  margin: 30px auto 0;
+  opacity: 0.8;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .news-header {
-    width: 90%;
-    padding: 20px 15px;
+  .news-page {
+    padding: 80px 5%;
   }
+
   .news-page-title {
-    font-size: 1.5rem;
+    font-size: 2rem;
   }
+
   .news-page-subtitle {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 }

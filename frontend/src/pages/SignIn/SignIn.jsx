@@ -32,7 +32,7 @@ const SignIn = () => {
         transition={{ duration: 0.5, ease: "easeOut" }}
       >
         <h2>Welcome Back</h2>
-        <p>Sign in to continue trading on Cryptoplace</p>
+        <p>Sign in to continue trading on CoinHub</p>
 
         <form onSubmit={handleSubmit}>
           <div className="input-group">

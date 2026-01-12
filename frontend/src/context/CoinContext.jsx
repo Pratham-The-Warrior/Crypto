@@ -30,10 +30,14 @@ const CoinContextProvider = (props) => {
     fetchAllCoin();
   }, [currency]);
 
+  const [visualMode, setVisualMode] = useState("normal"); // normal | zen
+
   const contextValue = {
     allCoin,
     currency,
     setCurrency,
+    visualMode,
+    setVisualMode
   };
 
   return (

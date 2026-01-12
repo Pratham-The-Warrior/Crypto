@@ -7,20 +7,26 @@ import Footer from "./components/Footer/Footer";
 import Feature from "./pages/Features/Feature";
 import SignUp from "./pages/signUp/signUp";
 import SignIn from "./pages/SignIn/SignIn";
-import Pricing from "./pages/Pricing/Pricing";
 import NewsPage from "./pages/News/NewsPage";
 
+import { useContext } from "react";
+import { CoinContext } from "./context/CoinContext";
+
 const App = () => {
+  const { visualMode } = useContext(CoinContext);
+
   return (
     <div className="app">
-      <Navbar />
+      <div style={{ display: visualMode === 'zen' ? 'none' : 'block' }}>
+        <Navbar />
+      </div>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/features" element={<Feature />} />
         <Route path="/coin/:coinId" element={<Coin />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/news" element={<NewsPage />} />
       </Routes>
       <Footer />

@@ -39,13 +39,11 @@ const Home = () => {
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
         <h1>
-          Largest <br /> Crypto Exchange
+
+          Best CryptoCoins Liquidity Aggregator.
         </h1>
-        <p>
-          Welcome to the World's best cryptocurrency Exchange.
-          <br />
-          Sign up to explore more...
-        </p>
+
+
         <form onSubmit={searchHandler}>
           <input
             onChange={inputHandler}
@@ -126,7 +124,7 @@ const Home = () => {
           </motion.div>
         )}
       </div>
-    </div>
+    </div >
   );
 };
 

@@ -41,37 +41,63 @@ const features = [
 ];
 
 const Features = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15
+      }
+    }
+  };
+
   return (
     <div className="features-section">
       <motion.div
         className="features-header"
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        <h2>Our Key Features</h2>
+        <h2>Why Choose CoinHub?</h2>
         <p>
-          Experience the future of crypto trading with our secure and intuitive
-          platform.
+          We provide the tools, security, and speed you need to trade with confidence.
+          Experience the next generation of crypto exchange.
         </p>
       </motion.div>
 
-      <div className="features-grid">
+      <motion.div
+        className="features-grid"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {features.map((feature, index) => (
           <motion.div
             className="feature-card"
             key={index}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.4, delay: index * 0.1 }}
-            whileHover={{ scale: 1.05 }}
+            variants={cardVariants}
           >
             <div className="feature-icon">{feature.icon}</div>
             <h3>{feature.title}</h3>
             <p>{feature.description}</p>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };
